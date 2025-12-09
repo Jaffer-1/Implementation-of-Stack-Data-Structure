@@ -1,115 +1,89 @@
-# 🏗️ Understanding Stack: Data Structure Visualization
+# Understanding Stack - Data Structure Visualization
 
-## 📖 Project Overview
+This project demonstrates the real-world use of the Stack data structure through two practical simulations: a Notification Center and a Text Editor with Undo/Redo functionality.
 
-**Understanding Stack** is an interactive project designed to demonstrate the real-world utility of the **Stack** data structure (Linear Data Structure).
-
-The project focuses on the **LIFO (Last-In, First-Out)** principle through two distinct, practical simulations:
-
-**Notification Center:** A mobile-style interface demonstrating how alerts stack up on a lock screen.
-
-**Text Editor:** A functional document editor demonstrating how **Undo/Redo** operations rely on stacks.
-
-This project features a clean, responsive GUI for visualization and includes pure C++ source code for the backend logic.
+The goal of the project is to help learners understand how the Last-In, First-Out (LIFO) principle works in real applications. The project includes a simple web interface for visualization and C++ source code for the backend logic.
 
 ---
 
-## 🚀 Features
+## Project Overview
 
-### 1\. 🔔 Notification Stack (The Simulator)
+The project contains two main components:
 
-**Real-World Metaphor:** Simulates a smartphone lock screen where new notifications appear on top.
+1. Notification Stack  
+   A mobile-style simulation that shows how notifications are added, viewed, and removed using stack operations.
 
-**Operations:**
+2. Text Editor  
+   A basic document editor that uses two stacks to perform Undo and Redo operations.
 
-**PUSH (Receive):** Add a new notification (App Name + Message) to the top of the stack.
-
-**POP (Clear):** Dismiss the most recent notification (LIFO logic).
-
-**PEEK (Preview):** Highlight the top notification without removing it.
-
-**Visuals:** Features a realistic phone interface with glassmorphism cards and swipe-to-dismiss animations.
-
-**Action Log:** A hidden system log tracks every event (Received, Dismissed, Peeked) with timestamps.
-
-### 2\. 📝 Text Editor (The Application)
-
-**Two-Stack Algorithm:** Uses `UndoStack` to store past states and `RedoStack` to store future states.
-
-**Functionality:**
-
-**Write:** Types text into the document (pushes state to Undo Stack).
-
-**Undo:** Reverts to the previous state (pops from Undo, pushes to Redo).
-
-**Redo:** Re-applies the reverted change (pops from Redo, pushes to Undo).
-
-**Smart Logic:** The Redo history is automatically cleared if the user writes new text after undoing, perfectly mimicking modern software behavior.
+Both components help explain how stacks behave in real-world software.
 
 ---
 
-## 🛠️ Technology Stack
+## Features
 
-| **Component** | **Technology** | **Description** |
-| --- | --- | --- |
-| **Frontend GUI** | **HTML5, CSS3, JS** | Responsive dashboard with animations, flexbox layouts, and DOM manipulation. |
-| **Backend Logic** | **C++ (STL)** | Standalone `.cpp` files implementing the core logic using `std::stack`. |
-| **Design** | **Inter Font** | Clean, professional typography using Google Fonts. |
+### 1. Notification Stack Simulator
 
----
+- Add a new notification to the top of the stack  
+- Remove the most recent notification  
+- Preview the top notification without removing it  
+- Visual interface designed to resemble a phone lock screen  
+- Internal action log that records each operation with a timestamp
 
-## 💻 How to Run
+### 2. Text Editor with Undo and Redo
 
-### 1\. Running the GUI (Web Interface)
-
-Simply double-click `**index.html**` to open it in any web browser (Chrome, Edge, Safari).
-
-**No installation required.** It runs entirely client-side.
-
-### 2\. Running the C++ Logic
-
-Open the `.cpp` files in VS Code or any C++ IDE.
-
-Compile and run to see the console-based version of the logic:
+- Uses two separate stacks: UndoStack and RedoStack  
+- Typing produces a new state pushed onto the UndoStack  
+- Undo operation moves the latest state to the RedoStack  
+- Redo operation restores a previously undone state  
+- Redo history clears automatically when new text is typed after an undo
 
 ---
 
-## 🧠 Data Structure Logic
+## Technology Used
 
-### Why use a Stack?
-
-**For Notifications:**
-
-Notifications are temporal. The most recent alert is the most relevant.
-
-You typically address the top one before moving to the older ones beneath it. This is a natural **Stack (LIFO)** behavior.
-
-**For Undo/Redo:**
-
-Editing is a linear timeline.
-
-When you Undo, you are moving backward in time. To go "Forward" (Redo), you need a temporary storage space for the states you just left.
-
-Two Stacks allow O(1) time complexity for instant Undo/Redo operations.
+| Component        | Technology         | Description                                    |
+|------------------|--------------------|------------------------------------------------|
+| Frontend         | HTML, CSS, JavaScript | Web interface and visualization              |
+| Backend Logic    | C++ (STL)          | Core stack logic using `std::stack`           |
+| Typography       | Inter Font         | Clean and minimal user interface              |
 
 ---
 
-## 📸 Usage Guide
+## How to Run
 
-**Switching Modes:** Use the navigation tabs at the top to toggle between "Notification Stack" and "Text Editor".
+### Running the Web Interface
+Open the file `index.html` in any modern web browser.  
+The project runs entirely on the client side and requires no installation.
 
-**Notification Mode:** Enter an App Name (e.g., "WhatsApp") and Message, then click **Push**. Use **Pop** to clear it.
-
-**Editor Mode:** Type text and hit Enter. Use the large **Undo** and **Redo** buttons to navigate your typing history.
-
-**Logs:** Click "View Action Log" in either mode to see the backend operations happening in real-time.
+### Running the C++ Logic
+Open the `.cpp` files using any C++ IDE or editor.  
+Compile and run the program to see a console-based demonstration of the stack operations.
 
 ---
 
-## 📝 Credits
+## Why Stacks?
 
-**Developed By:** M. NagaSai Rishi
+### Notification System  
+The most recent notification is always shown first. Older notifications appear underneath. This naturally follows the LIFO model.
 
-**Course:** Coding Skills - 1 (B.Tech 3rd Sem)
+### Undo/Redo System  
+Undo moves backward in the editing timeline. Redo moves forward. Two stacks allow these actions to be performed quickly and efficiently.
 
-**Submission Date:** November 9th
+---
+
+## Usage Instructions
+
+- Use the navigation bar to switch between the Notification Stack and the Text Editor  
+- In Notification mode: enter the app name and message, then click the Push button  
+- In Editor mode: type text, press Enter, then use Undo or Redo as needed  
+- The Action Log displays the internal operations for both modules
+
+---
+
+## Credits
+
+Developer: Shaik Jaffer  
+Course: Coding Skills - I (B.Tech, 3rd Semester)  
+Submission Date: November 9, 2025
+
