@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Stack</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236366f1%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><rect x=%224%22 y=%2216%22 width=%2216%22 height=%224%22 rx=%221%22/><rect x=%224%22 y=%2210%22 width=%2216%22 height=%224%22 rx=%221%22/><rect x=%224%22 y=%224%22 width=%2216%22 height=%224%22 rx=%221%22/></svg>">
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <div class="nav-center">
+            <button class="tab-btn active" onclick="switchTab('sim')">
+                <span class="tab-icon">🔔</span> Notification Stack
+            </button>
+            <button class="tab-btn" onclick="switchTab('editor')">
+                <span class="tab-icon">📝</span> Text Editor
+            </button>
+        </div>
+    </nav>
+
+    <main class="content-area">
+
+        <section id="sim" class="view-section active">
+            <div class="sim-container">
+                
+                <div class="sim-controls">
+                    <div class="sim-header">
+                        <h2>Notification Center</h2>
+                        <p>Visualizing LIFO: Newest alerts stay on top.</p>
+                    </div>
+
+                    <div class="control-box">
+                        <div class="input-row">
+                            <input type="text" id="notifSource" placeholder="App Name (e.g. WhatsApp)" class="sim-input" autocomplete="off">
+                        </div>
+                        <div class="input-row">
+                            <input type="text" id="notifMsg" placeholder="Message..." class="sim-input" autocomplete="off">
+                        </div>
+                        
+                        <div class="button-stack">
+                            <button class="btn-ctrl btn-push" onclick="pushNotif()">RECEIVE NOTIFICATION (Push)</button>
+                            <button class="btn-ctrl btn-pop" onclick="popNotif()">CLEAR NOTIFICATION (Pop)</button>
+                            <button class="btn-ctrl btn-peek" onclick="peekNotif()">PREVIEW TOP (Peek)</button>
+                            <button class="btn-ctrl btn-clear" onclick="clearNotifs()">CLEAR ALL</button>
+                        </div>
+                        
+                        <p id="simMsg" class="sim-status">No Notifications</p>
+                    </div>
+
+                    <div class="log-section">
+                        <button class="btn-toggle-log" onclick="toggleSimLog()">
+                            <span id="simLogIcon">▶</span> System Log
+                        </button>
+                        <div id="simLogContainer" class="log-container hidden">
+                            <ul id="simLogList"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phone-wrapper">
+                    <div class="phone-screen">
+                        <div class="phone-notch"></div>
+                        <div class="phone-header">
+                            <span>9:41</span>
+                            <div class="status-icons">
+                                <span>📶</span><span>🔋</span>
+                            </div>
+                        </div>
+                        <div class="sim-visual-box" id="simVisual"></div>
+                        <div class="empty-placeholder" id="emptyPhoneMsg">All Caught Up</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="editor" class="view-section">
+            <div class="editor-grid">
+                <aside class="stack-panel left-panel">
+                    <div class="panel-header">
+                        <h3>Undo Stack</h3>
+                        <span class="badge undo-badge">History</span>
+                    </div>
+                    <div class="stack-list" id="undoList"><div class="empty-state">Empty</div></div>
+                </aside>
+
+                <div class="editor-main">
+                    <div class="paper-container">
+                        <div class="paper-header">
+                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                            <span class="doc-title">untitled_document.txt</span>
+                        </div>
+                        <div class="paper-sheet" id="docDisplay">
+                            <span class="placeholder-text">Start typing...</span>
+                        </div>
+                    </div>
+
+                    <div class="controls-card">
+                        <div class="input-group">
+                            <input type="text" id="editorInput" placeholder="Type here and press Enter..." autocomplete="off">
+                            <button class="btn-primary" onclick="writeText()">Write</button>
+                        </div>
+                        <div class="hero-actions">
+                            <button class="btn-hero btn-undo" onclick="undo()">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10H14C18.4183 10 22 13.5817 22 18V20" /><path d="M3 10L9 16" /><path d="M3 10L9 4" /></svg> UNDO
+                            </button>
+                            <button class="btn-hero btn-redo" onclick="redo()">
+                                REDO <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10H10C5.58172 10 2 13.5817 2 18V20" /><path d="M21 10L15 16" /><path d="M21 10L15 4" /></svg>
+                            </button>
+                        </div>
+                        <div id="editorStatus" class="status-message"></div>
+                        <div class="log-section">
+                            <button class="btn-toggle-log" onclick="toggleEditorLog()">
+                                <span id="editorLogIcon">▶</span> View Activity Log
+                            </button>
+                            <div id="editorLogContainer" class="log-container hidden"><ul id="editorLogList"></ul></div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="stack-panel right-panel">
+                    <div class="panel-header">
+                        <h3>Redo Stack</h3>
+                        <span class="badge redo-badge">Future</span>
+                    </div>
+                    <div class="stack-list" id="redoList"><div class="empty-state">Empty</div></div>
+                </aside>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
